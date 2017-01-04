@@ -124,7 +124,7 @@ public class Status_Update extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Short description";ghjk
     }// </editor-fold>
 
 }
