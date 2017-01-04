@@ -35,6 +35,7 @@ public class AddTask extends HttpServlet {
             String comments=request.getParameter("commentsTextField");
             if(taskTextField==null)
             {
+                System.out.println("test comment");
                 out.println("task text field is not populated in UI.");
                 request.getRequestDispatcher("Task_tracker.jsp").forward(request, response);
             }
