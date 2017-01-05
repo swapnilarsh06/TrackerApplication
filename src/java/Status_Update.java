@@ -59,6 +59,11 @@ public class Status_Update extends HttpServlet {
             task=request.getParameter("myradio");
             System.out.println("task="+task);
             username=currentSession.getAttribute("username").toString();
+            if(username==null)
+            {
+                request.setAttribute("ErrorMessage", "Kindly login to proceed");
+                request.getRequestDispatcher("Error.jsp").forward(request, response);       
+            }
             int optionChosen=0;
             if(request.getParameter("Resume")!=null)
             {

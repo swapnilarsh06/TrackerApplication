@@ -35,12 +35,19 @@ public class AddTask extends HttpServlet {
             String comments=request.getParameter("commentsTextField");
             if(taskTextField==null)
             {
-                out.println("task text field is not populated in UI.");
-                request.getRequestDispatcher("Task_tracker.jsp").forward(request, response);
+                request.setAttribute("ErrorMessage","Task text field is not populated in UI.");
+                request.getRequestDispatcher("Error.jsp").forward(request, response);
             }
             else
             {
-                String username=request.getSession().getAttribute("username").toString();
+                String username=null;
+                if(request.getSession().getAttribute("username")!=null)
+                    username=request.getSession().getAttribute("username").toString();
+                else
+                {
+                    request.setAttribute("ErrorMessage","Kindly login with a valid username");
+                    request.getRequestDispatcher("Error.jsp").forward(request, response);                    
+                }
                 String path=getServletContext().getInitParameter("tasks_excel_path");
                 
                 TaskAdder.addtask(taskTextField,comments,username,path);

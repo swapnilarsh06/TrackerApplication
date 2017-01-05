@@ -98,7 +98,7 @@ public class StatusUpdater {
                 else
                 {
                     cell2=myRow.getCell(4);
-                    double timeSpent=Long.parseLong(cell2.getStringCellValue());
+                    double timeSpent=Double.parseDouble(cell2.getStringCellValue());
                     timeSpent+=diffHours;
                    
                     cell2.setCellValue(String.valueOf(timeSpent));
@@ -127,10 +127,11 @@ public class StatusUpdater {
                 Date obj=new Date();
                 df.format(obj);
                 DecimalFormat formatter = new DecimalFormat("000.000000");
-                double fv=date_obj.getTime();
-                double sv=obj.getTime();
-                double diff =sv-fv;
-                double diffHours = (double)((double)diff/(double)(60*60*1000));
+                long fv=date_obj.getTime();
+                long sv=obj.getTime();
+                long diff =sv-fv;
+                long divisor=60*60*1000;
+                double diffHours = ((double)diff/(double)divisor);
                 
                 XSSFCell cell2=null;
                 if(myRow.getCell(4)==null)
@@ -141,7 +142,7 @@ public class StatusUpdater {
                 else
                 {
                     cell2=myRow.getCell(4);
-                    double timeSpent=Long.parseLong(cell2.getStringCellValue());
+                    double timeSpent=Double.parseDouble(cell2.getStringCellValue());
                     timeSpent+=diffHours;
                    
                     cell2.setCellValue(String.valueOf(timeSpent));

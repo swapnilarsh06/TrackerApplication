@@ -36,9 +36,29 @@ public class login extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String username=null;
             RequestDispatcher rd=null;
-                username = request.getParameter("username");
-            if(username==null)
-                username=request.getSession().getAttribute("username").toString();
+            username = request.getParameter("username");
+            if(username==null)          //implies login.java is called from a page other than login.jsp
+            {
+                if(request.getSession().getAttribute("username")!=null)
+                    username=request.getSession().getAttribute("username").toString();
+                else
+                {
+                    request.setAttribute("ErrorMessage", "Kindly login to proceed");
+                    request.getRequestDispatcher("Error.jsp").forward(request, response);       
+                }
+            }
+            
+            else                        //implies login.java is called from login.jsp
+            {
+                String loginSheetPath=getServletContext().getInitParameter("loginsheetpath");
+                boolean authentication=Authenticator.authenticate(username,loginSheetPath);
+                if(!authentication)
+                {
+                    request.setAttribute("ErrorMessage", "Login Failed. Invalid Username. Try Again!!");
+                    request.getRequestDispatcher("Error.jsp").forward(request, response);
+                }
+                
+            }
             if(username!=null && username.trim()!="")
             {
                 HttpSession currentSession=request.getSession(true);
