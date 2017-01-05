@@ -14,9 +14,9 @@
     <body>
         <h1>Hello World!</h1>
         <%
-            String errorMessage=(String)request.getAttribute("ErrorMessage");
+            String ErrorMessage=(String)request.getAttribute("ErrorMessage");
         %>
-        <%= errorMessage %>
+        <%= ErrorMessage %>
         <a href="login.jsp">Home</a>
             
     </body>
