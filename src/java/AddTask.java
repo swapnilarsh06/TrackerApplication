@@ -49,7 +49,6 @@ public class AddTask extends HttpServlet {
                     request.getRequestDispatcher("Error.jsp").forward(request, response);                    
                 }
                 String path=getServletContext().getInitParameter("tasks_excel_path");
-                
                 TaskAdder.addtask(taskTextField,comments,username,path);
                 TaskAdder.addAllTask(taskTextField,comments,username,path);
                 request.getRequestDispatcher("/login").forward(request, response);

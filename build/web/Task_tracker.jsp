@@ -52,7 +52,7 @@ input, textarea {
   border: 1px solid #cecece;
   background: #d7d7d7;
   color:#000000;
-  
+  resize:none;
 }
 .myTable {
 background-color:#eee;
@@ -71,6 +71,32 @@ color:white;
 }
             
  </style>
+  <script>
+ <%--
+     function validateForm1() {
+    var x = document.forms["TaskTracker"]["taskTextField"].value;
+    var y = document.forms["TaskTracker"]["commentsTextField"].value;
+    
+    if (x == "") {
+        alert("Task must be filled out");
+        return false;
+        
+    }
+
+} --%>
+function evalGroup()
+{
+    var group = document.task_selection.myradio;
+
+    for (var i=1; i=<group.length; i++) {
+    if (group[i].checked)
+    break;
+    }
+    if (i===group.length)
+     alert("Please select a task");
+     return false;
+}
+        </script>
         <div class="head"> <h1>Project Tracker</h1></div>
     </head>
     <body>
@@ -113,9 +139,9 @@ color:white;
         </div>
         <div style=" position:absolute; left:40px; width:50%; margin-top:50px;">
         <table>   
-        <form name="Task Tracker" action="AddTask" method="post">
-        <tr><input type="text" name="taskTextField" placeholder="Enter your task"></tr><br><br>
-        <tr><textarea name="commentsTextField" cols="50" rows="5" placeholder="Enter additional comments"></textarea></tr><br>
+            <form name="TaskTracker" action="AddTask" method="post" onsubmit="return validateForm1()">
+                <tr><input type="text" name="taskTextField" placeholder="Enter your task" required></tr><br><br>
+                <tr><textarea name="commentsTextField" cols="50" rows="5" placeholder="Enter additional comments" required></textarea></tr><br>
         <tr><button name="submit" type="submit" >Add Task </button></tr><br><br>
         
         </form>
@@ -158,11 +184,11 @@ color:white;
                 </tbody>
                 </table>
            </select><br><br>
-           <textarea name="comments" cols="50" rows="5" placeholder="Enter comments"></textarea><br>
-           <button name="Resume" type="submit">Resume</button>
-           <button name="Pause" type="submit">Pause</button>   
-           <button name="Stop" type="submit">Stop</button>
-           <button name="Finish" type="submit">Finish</button>
+           <textarea name="comments" cols="50" rows="5" placeholder="Enter comments" required></textarea><br>
+           <button name="Resume" type="submit" onclick="evalGroup()">Resume</button>
+           <button name="Pause" type="submit" onclick="evalGroup()">Pause</button>   
+           <button name="Stop" type="submit" onclick="evalGroup()">Stop</button>
+           <button name="Finish" type="submit" onclick="evalGroup()">Finish</button>
            <% } %>
         </form>
     </div>

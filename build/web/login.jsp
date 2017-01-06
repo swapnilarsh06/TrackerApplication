@@ -87,13 +87,23 @@ width: 50px;
 
 
 </style>
+<%--<script>
+     function validateForm2() {
+    var x = document.forms["LoginForm"]["username"].value;
+    if (x == "") {
+        alert("Username must be filled out.");
+        return false;
+    }
+}
+</script> --%>
+ 
 </head>
 <body>
 <div id="login">
 <h1><strong>Welcome.</strong> Please login.</h1>
-<form action="login" method="post">
+<form name="LoginForm" action="login" method="post" >
 <fieldset>
-<p><input type="text" name="username" placeholder="USERNAME"/></p>
+    <p><input type="text" name="username" placeholder="USERNAME" required></p>
 <p><input type="submit" value="Login"></p>
 </fieldset>
 </form>
