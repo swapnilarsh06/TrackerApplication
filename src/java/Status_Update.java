@@ -52,11 +52,13 @@ public class Status_Update extends HttpServlet {
         }
         String username=null;
         String task=null;
+        String comments=null;
         try {
             
             HttpSession currentSession=request.getSession(false);
             String path=getServletContext().getInitParameter("tasks_excel_path");
             task=request.getParameter("myradio");
+            comments=request.getParameter("comments");
             System.out.println("task="+task);
             username=currentSession.getAttribute("username").toString();
             if(username==null)
@@ -82,7 +84,7 @@ public class Status_Update extends HttpServlet {
                 optionChosen=4;
             }
             StatusUpdater.updateStatus(path,username,task,optionChosen);
-            StatusUpdater.addStatusUpdate(path,username,task,"hard coded value comments",optionChosen);
+            StatusUpdater.addStatusUpdate(path,username,task,comments,optionChosen);
             
             request.getRequestDispatcher("/login").forward(request, response);       
     }

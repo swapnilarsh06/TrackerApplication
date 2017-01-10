@@ -162,19 +162,29 @@ function evalGroup()
                     <th>Select</th>
                     <th>Tasks</th>
                     <th>Status</th>
+                    <th>Time Spent</th>
                 </tr>
                 </thead>
                 <tbody>
                     <%
                 for(String task:tasks.keySet())
                 {
-                    String status=tasks.get(task);
+                    String []value=null;
+                    String status=null;
+                    String timeSpent=null;
+                    if(task!=null)
+                    {
+                        value=tasks.get(task).split(":");
+                        status=value[0];
+                        timeSpent=value[1];
+                    }
                     System.out.println(task.toString()); 
         %>
                 <tr>
                 <td><input type="radio" name=myradio value="<%= task %>"</td>    
                 <td><%= task %></td>
                 <td><%= status %></td>
+                <td><%= timeSpent %></td>
                 </tr>
         <%         
                 }

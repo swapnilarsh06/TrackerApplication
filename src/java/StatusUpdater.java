@@ -127,8 +127,9 @@ public class StatusUpdater {
 
                         Date obj = new Date();
                         df.format(obj);
-                        double diff = Math.abs(date_obj.getTime() - obj.getTime());
-                        double diffHours = diff / (60 * 60 * 1000);
+                        long diff = date_obj.getTime() - obj.getTime();
+                        long divisor = 60 * 60 * 1000;
+                        double diffHours = ((double) diff / (double) divisor);                        
                         //XSSFCell cell2=myRow.getCell(4);
                         XSSFCell totalTimeCell = null;
                         if (myRow.getCell(4) == null) {     
@@ -180,9 +181,9 @@ public class StatusUpdater {
 
                         Date obj = new Date();
                         df.format(obj);
-                        double diff = Math.abs(date_obj.getTime() - obj.getTime());
-                        double diffHours = diff / (60 * 60 * 1000);
-                        //XSSFCell cell2=myRow.getCell(4);
+                        long diff = date_obj.getTime() - obj.getTime();
+                        long divisor = 60 * 60 * 1000;
+                        double diffHours = ((double) diff / (double) divisor);                        
                         XSSFCell totalTimeCell = null;
                         if (myRow.getCell(4) == null) {     
                             totalTimeCell = myRow.createCell(4);

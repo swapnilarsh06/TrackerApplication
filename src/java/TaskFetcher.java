@@ -3,6 +3,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -54,11 +58,47 @@ public class TaskFetcher {
             {
                 String task;
                 String status;
+                String totTimeString=null;
+                String latestTimeStamp;
+                double totTime;
                 task=row.getCell(1).getStringCellValue();
                 status=row.getCell(2).getStringCellValue();
-                if(!status.equalsIgnoreCase("completed"))
+                latestTimeStamp=row.getCell(3).getStringCellValue();
+                if(status.equalsIgnoreCase("Paused") || status.equalsIgnoreCase("Deferred") )
+                {
+                    if(row.getCell(4)!=null)
+                        totTimeString=row.getCell(4).getStringCellValue();
+                }
+                else if(status.equalsIgnoreCase("In-Progress"))
+                {
+                    if(row.getCell(4)!=null)
+                        totTimeString=row.getCell(4).getStringCellValue();
+                    if(totTimeString!=null)
+                    {
+                        totTime=Double.parseDouble(totTimeString);                        
+                    }
+                    else
+                    {
+                        totTime=0;
+                    }
+                    DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+                    Date currentTimestamp = new Date();
+                    Date latestTimeStampObj=null;
+                    df.format(currentTimestamp);
+                    try {
+                        latestTimeStampObj=df.parse(latestTimeStamp);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(TaskFetcher.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    long timeDifference=currentTimestamp.getTime()-latestTimeStampObj.getTime();
+                    long divisor = 60 * 60 * 1000;
+                    double diffHours = ((double) timeDifference / (double) divisor);                        
+                    totTime+=diffHours;
+                    totTimeString=String.valueOf(totTime);
+                }
+                if(status!=null && !status.equalsIgnoreCase("completed") && task!=null && totTimeString!=null)
                 {                
-                    activetasks.put(task, status);
+                    activetasks.put(task, status+":"+totTimeString);
                 }
             }
         }
